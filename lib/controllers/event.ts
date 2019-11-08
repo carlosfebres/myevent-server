@@ -3,6 +3,8 @@ import Event from "../models/event";
 import Hashtag from "../models/hashtag";
 import {io} from "../app";
 import {Socket} from "socket.io";
+import IEvent from "../types/event";
+import {createEvent} from "../service/event";
 
 /**
  * HTTP Endpoint
@@ -13,17 +15,11 @@ export const addEvent = async (req: Request, res: Response) => {
     try {
         const eventData = req.body;
 
-        eventData.hashtags = await Hashtag.retriveHashtags(eventData.hashtags);
-
-        const event = new Event(eventData);
-        await event.save();
+        await createEvent(eventData);
 
         res.json({
             text: "Event Created"
         });
-
-        io.emit('refreshEvents')
-
     } catch (e) {
         res.status(500).json({error: "Unexpected Error"});
         throw e;

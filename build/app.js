@@ -53,3 +53,5 @@ require('./listeners');
  */
 httpServer.listen(port);
 console.log('Listening to port: ' + port);
+const populate = require('./util/populate').default;
+populate();

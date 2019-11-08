@@ -5,7 +5,7 @@ exports.HashtagSchema = new mongoose_1.Schema({
     name: { type: String, required: true }
 });
 exports.HashtagSchema.statics.retriveHashtags = (hashtags) => Promise.all(hashtags.map((hashtag) => Hashtag
-    .findOneAndUpdate({ name: hashtag }, { name: hashtag }, { upsert: true })
+    .findOneAndUpdate({ name: hashtag }, { name: hashtag }, { upsert: true, new: true })
     .exec()));
 const Hashtag = mongoose_1.model('Hashtag', exports.HashtagSchema);
 exports.default = Hashtag;

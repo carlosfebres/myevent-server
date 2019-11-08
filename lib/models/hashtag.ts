@@ -9,12 +9,12 @@ export const HashtagSchema = new Schema(
 HashtagSchema.statics.retriveHashtags = (hashtags: string[]) => Promise.all(
     hashtags.map(
         (hashtag: string) => Hashtag
-            .findOneAndUpdate({name: hashtag}, {name: hashtag}, {upsert: true})
+            .findOneAndUpdate({name: hashtag}, {name: hashtag}, {upsert: true, new: true})
             .exec()
     )
 );
 
-interface IHashtagDoc extends Document {
+export interface IHashtagDoc extends Document {
     name: string;
 }
 

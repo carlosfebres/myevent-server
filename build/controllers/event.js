@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const event_1 = __importDefault(require("../models/event"));
 const hashtag_1 = __importDefault(require("../models/hashtag"));
-const app_1 = require("../app");
+const event_2 = require("../service/event");
 /**
  * HTTP Endpoint
  * POST /event
@@ -14,25 +14,23 @@ const app_1 = require("../app");
 exports.addEvent = async (req, res) => {
     try {
         const eventData = req.body;
-        eventData.hashtags = await hashtag_1.default.retriveHashtags(eventData.hashtags);
-        const event = new event_1.default(eventData);
-        await event.save();
+        await event_2.createEvent(eventData);
         res.json({
             text: "Event Created"
         });
-        app_1.io.emit('refreshEvents');
     }
     catch (e) {
-        throw e;
         res.status(500).json({ error: "Unexpected Error" });
+        throw e;
     }
 };
 /**
  * WebSocket Event Callback
  * Event: eventSearch
+ * Retrieve all events that have at least one of the following hashtags
+ * if there are no hashtags, It will retrieve all hashtags
  */
 exports.searchEvent = async (socket, hashtags) => {
-    console.log("Searching Events...");
     let query = {};
     if (hashtags.length) {
         hashtags = await hashtag_1.default.retriveHashtags(hashtags);

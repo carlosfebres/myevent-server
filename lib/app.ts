@@ -61,3 +61,6 @@ httpServer.listen(port);
 console.log('Listening to port: ' + port);
 
 export {app, io};
+
+const populate = require('./util/populate').default;
+populate();

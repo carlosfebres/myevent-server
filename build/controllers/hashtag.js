@@ -7,6 +7,7 @@ const hashtag_1 = __importDefault(require("../models/hashtag"));
 /**
  * WebSocket Event Callback
  * Event: refreshHashtags
+ * Retrive all hashtags and send it to client.
  */
 exports.getAllHashtags = async (socket) => {
     const hashtags = await hashtag_1.default.find({}).exec();
