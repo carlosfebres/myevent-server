@@ -16,7 +16,7 @@
     "mongoose": "^5.7.8",
     "morgan": "~1.9.1",
     "redis": "^2.8.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
